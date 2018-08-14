@@ -1,0 +1,86 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
+    <title>My Page</title> 
+    <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script>
+      // DEBUG
+      //
+      // var urlArray = location.search.slice(1).split("&");
+      var urlArray = window.AppInventor.getWebViewString().split("&");
+
+      var listContent = urlArray[0].split("||");
+      var listIndex = []; // It's the list of original index of ListContents after sort.
+      var tupleScore = {};
+
+      function createListIndex(){
+	  for (i = 0; i < listContent.length; i += 3) {
+	      tupleScore[i / 3] = listContent[i + 2];
+	  }
+	  
+	  var sortable = [];
+	  for (var index in tupleScore) {
+	      sortable.push([index, tupleScore[index]]);
+	  }
+	  
+	  sortable.sort(function(a, b) {
+	      return b[1] - a[1];
+	  });
+
+	  for (i = 0; i < sortable.length; i++) {
+	      listIndex.push(sortable[i][0]);
+	  }
+
+	  // DEBUG
+	  //
+	  // $("#label").append(listIndex);
+      }
+
+      function createListView(){
+
+	  // DEBUG
+	  //
+	  // $("#label").append(listContent);
+
+	  $("#content").append("<ul id='list' data-role='listview' data-count-theme='b' data-inset='true'></ul>");
+	  $("#content").trigger("create");
+
+	  $('ul').on('click','li', function(){
+	      var selected_index = $(this).index();
+	      // DEBUG
+	      //
+              // alert(selected_index);
+	      window.AppInventor.setWebViewString(listIndex[selected_index]);
+	  });
+
+	  createListIndex();
+	  
+	  // this part needs to change! do sorting ok?
+	  for (i = 0; i < listIndex.length; i++) {
+              $("#list").append("<li><a href='#'>" + listContent[listIndex[i] * 3] + " says: " + listContent[listIndex[i] * 3 + 1] + "<span class='ui-li-count'>" + parseInt(listContent[listIndex[i] * 3 + 2]) + "</span></a></li>");
+              $("#list").listview("refresh");
+	      
+	  }
+      }
+      </script>
+  </head> 
+  <body onload="createListView();">
+    
+    <div data-role="page">
+
+      <div id="label">
+      
+      <div data-role="content" id="content">
+      </div><!-- /content -->
+    </div><!-- /page -->
+    
+  </body>
+</html>
+
+
+
