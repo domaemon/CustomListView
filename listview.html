@@ -62,7 +62,7 @@
 	  
 	  // this part needs to change! do sorting ok?
 	  for (i = 0; i < listIndex.length; i++) {
-              $("#list").append("<li><a href='#'>" + listContent[listIndex[i] * 3] + " says: " + listContent[listIndex[i] * 3 + 1] + "<span class='ui-li-count'>" + parseInt(listContent[listIndex[i] * 3 + 2]) + "</span></a></li>");
+              $("#list").append("<li><a href='#'>" + listContent[listIndex[i] * 3] + ": " + listContent[listIndex[i] * 3 + 1] + "<span class='ui-li-count'>" + parseInt(listContent[listIndex[i] * 3 + 2]) + "</span></a></li>");
               $("#list").listview("refresh");
 	      
 	  }
