@@ -43,28 +43,28 @@
 
       function createListView(){
 
-	  // DEBUG
-	  //
-	  // $("#label").append(listContent);
-
-	  $("#content").append("<ul id='list' data-role='listview' data-count-theme='b' data-inset='true'></ul>");
-	  $("#content").trigger("create");
-
-	  $('ul').on('click','li', function(){
-	      var selected_index = $(this).index();
-	      // DEBUG
-	      //
-              // alert(selected_index);
-	      window.AppInventor.setWebViewString(listIndex[selected_index]);
-	  });
-
-	  createListIndex();
-	  
-	  // this part needs to change! do sorting ok?
-	  for (i = 0; i < listIndex.length; i++) {
-              $("#list").append("<li><a href='#'>" + listContent[listIndex[i] * 3] + ": " + listContent[listIndex[i] * 3 + 1] + "<span class='ui-li-count'>" + parseInt(listContent[listIndex[i] * 3 + 2]) + "</span></a></li>");
-              $("#list").listview("refresh");
+	  if (listContent.length == 1) {
+	      $("#content").append("CONTENT NOT AVAILABLE");
+	  } else {
+	      $("#content").append("<ul id='list' data-role='listview' data-count-theme='b' data-inset='true'></ul>");
+	      $("#content").trigger("create");
 	      
+	      $('ul').on('click','li', function(){
+		  var selected_index = $(this).index();
+		  // DEBUG
+		  //
+		  // alert(selected_index);
+		  window.AppInventor.setWebViewString(listIndex[selected_index]);
+	      });
+	      
+	      createListIndex();
+	      
+	      // this part needs to change! do sorting ok?
+	      for (i = 0; i < listIndex.length; i++) {
+		  $("#list").append("<li><a href='#'>" + listContent[listIndex[i] * 3] + ": " + listContent[listIndex[i] * 3 + 1] + "<span class='ui-li-count'>" + parseInt(listContent[listIndex[i] * 3 + 2]) + "</span></a></li>");
+		  $("#list").listview("refresh");
+		  
+	      }
 	  }
       }
       </script>
